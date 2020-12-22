@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     public CharacterController2D controller;
     public float runSpeed = 40f;
+    bool jump = false;
     float moveXAxis = 0f;
     // Start is called before the first frame update
     void Start()
@@ -19,15 +20,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Input.GetAxisRaw("Horizontal"));
         moveXAxis = Input.GetAxisRaw("Horizontal") * runSpeed;
-        Debug.Log(moveXAxis);
+				if(Input.GetButtonDown("Jump")){
+					jump = true;
+				}
     }
 
     void FixedUpdate()
     {
-        Debug.Log(moveXAxis * Time.fixedDeltaTime);
-        controller.Move(moveXAxis * Time.fixedDeltaTime, false, false);
-
+        controller.Move(moveXAxis * Time.fixedDeltaTime, false, jump);
+				jump = false;
     }
 }
