@@ -7,39 +7,27 @@ public class PlayerMovement : MonoBehaviour
 
 {
 
-    public Rigidbody2D body;
+    public CharacterController2D controller;
+    public float runSpeed = 40f;
+    float moveXAxis = 0f;
     // Start is called before the first frame update
     void Start()
     {
-			body = GetComponent<Rigidbody2D>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("It's working!!");
+        Debug.Log(Input.GetAxisRaw("Horizontal"));
+        moveXAxis = Input.GetAxisRaw("Horizontal") * runSpeed;
+        Debug.Log(moveXAxis);
+    }
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            Debug.Log("The key 'W' was successfully pressed");
-            body.velocity = Vector2.up * 10;
-        }
+    void FixedUpdate()
+    {
+        Debug.Log(moveXAxis * Time.fixedDeltaTime);
+        controller.Move(moveXAxis * Time.fixedDeltaTime, false, false);
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            Debug.Log("The key 'W' was successfully pressed");
-            body.velocity = Vector2.right * 10;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            Debug.Log("The key 'W' was successfully pressed");
-            body.velocity = Vector2.left * 10;
-        }
-        //if (Input.GetKey(KeyCode.S))
-        //{
-            //Debug.Log("The key 'W' was successfully pressed");
-            //body.velocity = Vector2.down * 10;
-        //}
     }
 }
