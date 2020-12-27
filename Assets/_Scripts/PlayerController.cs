@@ -5,16 +5,18 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    //private CapsuleCollider2D collider2d;
     private BoxCollider2D box2D;
-    private float speed = 500f, runSpeed = 1000f, jumpSpeed = 45000f, climp = 10f;
+    private float speed = 500f, runSpeed = 1000f, jumpSpeed = 7.5f, climp = 10f;
     public float distanceToGround = 0.1f;
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        box2D = GetComponent<BoxCollider2D>();
+    }
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        rb = GetComponent<Rigidbody2D>();
-        box2D = GetComponent<BoxCollider2D>();
-        //collider2d = GetComponent<CapsuleCollider2D>();
+
     }
     void Update()
     {
@@ -34,17 +36,34 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(new Vector2(0, climp * Time.deltaTime));
         }
-        if (BoolJump() && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButton("Sprint") && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) || Input.GetButton("Sprint") && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S))
         {
-            rb.AddForce(Vector2.up * jumpSpeed * Time.deltaTime, ForceMode2D.Force);
+            Runner();
+        }
+
+        //El salto al multiplicarlo con el Time.deltaTime se va a la mrd, el Time.deltaTime es un comando importante para que no varien las fisicas en un algun dispositovo con potencia extremadamente baja o una con mucha
+        //Aun asi al aplicarlo al salto este hace saltos extraños, la unica solucion que veo es limitar los FPS
+        /*if (BoolJump() && Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.velocity = new Vector2(0f, jumpSpeed);
+        }*/
+    }
+    private void FixedUpdate()
+    {
+        //TODO reparar el salto
+        if (BoolJump() && Input.GetButton("Jump"))
+        {
+            rb.velocity = new Vector2(0f, jumpSpeed);
         }
     }
-    //public LayerMask groundLayer;
     bool BoolJump()
     {
         Vector2 capsuleBottom = new Vector2(box2D.bounds.center.x, box2D.bounds.min.y);
         bool grounded = Physics2D.IsTouchingLayers(box2D);
         return grounded;
     }
-
+    void Runner()
+    {
+        Vector2 runnerVector = new Vector2(runSpeed, jumpSpeed + 2);
+    }
 }

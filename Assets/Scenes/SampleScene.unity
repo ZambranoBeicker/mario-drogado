@@ -512,6 +512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 18206671}
   - component: {fileID: 18206670}
+  - component: {fileID: 18206672}
   m_Layer: 0
   m_Name: Character_03
   m_TagString: Untagged
@@ -583,6 +584,25 @@ Transform:
   m_Father: {fileID: 1537676109}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &18206672
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18206669}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &18971986 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7478208736155526082, guid: 6a7ec16b7137a4940b9b0da66c77d0cf,
@@ -35312,8 +35332,8 @@ GameObject:
   - component: {fileID: 1537676109}
   - component: {fileID: 1537676105}
   - component: {fileID: 1537676107}
-  - component: {fileID: 1537676108}
   - component: {fileID: 1537676106}
+  - component: {fileID: 1537676108}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -35366,7 +35386,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.1}
+  m_Size: {x: 0.55, y: 0.1}
   m_EdgeRadius: 0
 --- !u!70 &1537676107
 CapsuleCollider2D:
