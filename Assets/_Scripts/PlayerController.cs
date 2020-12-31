@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private BoxCollider2D box2D;
     private SpriteRenderer mario;
-    [SerializeField] private float speed = 480f,runSpeed = 1000f, jumpSpeed = 280f, climp = 2.5f;
-    //private float distanceToGround = 0.1f;
+    [SerializeField] private float speed = 480f,runSpeed = 1000f, jumpSpeed = 550f, climp = 2.5f;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,21 +26,21 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
-            anim.SetFloat("Walking", 1f);
             rb.AddForce(new Vector2(-speed * Time.deltaTime, 0));
             mario.flipX = true;
         }
         if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {
-            anim.SetFloat("Walking", -1f);
             rb.AddForce(new Vector2(speed * Time.deltaTime, 0));
             mario.flipX = false;
         }
+        //TODO: Añadir una Funcion en OntriggerEnter2D en Raiz ascendente(puede violar la gravedad) y no violar la gravedad
         if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
         {
             rb.velocity = new Vector2(0, climp);
         }
-        if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
+        //TODO: Añadir una Funcion en OntriggerEnter2D Raiz ascendente(Puede violar la gravedad) y para entrar a un tuvo(ignora las colisiones y la gravedad)
+        if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.D))
         {
             rb.velocity = new Vector2(0, -climp);
         }
@@ -49,20 +48,19 @@ public class PlayerController : MonoBehaviour
         {
             Runner();
         }
-
-        //para evitar errores mas grandes es necesario movelo a FixedUpdate o establecer un limite en los cuadros por segundo
-        /*if (BoolJump() && Input.GetKeyDown(KeyCode.Space))
+        //TODO:Reparar
+        if (BoolJump() && Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce = new Vector2(0f, jumpSpeed);
-        }*/
+            rb.AddForce(new Vector2(0, jumpSpeed));
+        }
     }
     private void FixedUpdate()
     {
         //TODO: reparar el salto e Input
-        if (BoolJump() && Input.GetButton("Jump"))
+        /*if (BoolJump() && Input.GetButton("Jump"))
         {
             rb.AddForce(new Vector2(0, jumpSpeed));
-        }
+        }*/
     }
     private bool BoolJump()
     {
@@ -76,4 +74,5 @@ public class PlayerController : MonoBehaviour
         //TODO: Boton para Correr en alfa, es necesario que vuelva a su valor inicial una vez el boton deje de ser precionado
         Vector2 runnerVector = new Vector2(runSpeed, jumpSpeed + 2);
     }
+    //TODO: añadir Funcion de nadar, vida y mario pequeño
 }
